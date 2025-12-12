@@ -106,7 +106,7 @@ const Hero = () => {
         {bannerImages[currentSlide].heading.map((line, i) => (
           <h1
             key={i}
-            className="font-serif font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed"
+            className=" font-normal text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed"
           >
             {line}
           </h1>

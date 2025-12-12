@@ -27,7 +27,7 @@ const BookingForm = () => {
             {/* FORM GRID */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-4 md:gap-6 items-center">
                 <div className="col-span-1 flex justify-center md:justify-start mb-6 md:mb-0">
-                    <div className="flex items-center text-black font-semibold text-lg tracking-widest">
+                    <div className="flex items-center text-black font-normal text-lg tracking-widest">
                         <FaStar className="text-gray-500 mr-2" />
                         LOWEST AVAILABLE RATE
                     </div>
@@ -35,7 +35,7 @@ const BookingForm = () => {
 
                 {/* LOCATION */}
                 <div className="col-span-1 sm:col-span-2 md:col-span-2 flex flex-col border-b border-gray-400">
-                    <label className="text-md text-left font-semibold text-gray-700 py-1">Location</label>
+                    <span className="text-md text-left font-semibold text-gray-700 py-1">Location</span>
                     <div className="relative">
                         <select
                             value={location}
@@ -54,7 +54,7 @@ const BookingForm = () => {
 
                 {/* CHECK-IN */}
                 <div className="col-span-1 sm:col-span-1 md:col-span-1 flex flex-col border-b border-gray-400">
-                    <label className="text-md text-left font-semibold text-gray-700 py-1 tracking-wide">Check-In</label>
+                    <span className="text-md text-left font-semibold text-gray-700 py-1 tracking-wide">Check-In</span>
                     <input
                         type="date"
                         value={checkIn}
@@ -65,7 +65,7 @@ const BookingForm = () => {
 
                 {/* CHECK-OUT */}
                 <div className="col-span-1 sm:col-span-1 md:col-span-1 flex flex-col border-b border-gray-400">
-                    <label className="text-md text-left font-semibold text-gray-700 py-1 tracking-wide">Check-Out</label>
+                    <span className="text-md text-left font-semibold text-gray-700 py-1 tracking-wide">Check-Out</span>
                     <input
                         type="date"
                         value={checkOut}
@@ -76,7 +76,7 @@ const BookingForm = () => {
 
                 {/* BUTTON */}
                 <div className="col-span-1 sm:col-span-2 md:col-span-1 flex justify-center md:justify-end mt-4 sm:mt-0  border-gray-400">
-                    <button className="bg-[#613a1a] text-white font-bold px-18 py-3 rounded-lg hover:bg-[#2b2a29] hover:scale-105 transition-all w-full sm:w-auto">
+                    <button className="bg-[#613a1a] text-white font-normal px-18 py-3 rounded-lg hover:bg-[#2b2a29] hover:scale-105 transition-all w-full sm:w-auto">
                         Check Availability
                     </button>
                 </div>

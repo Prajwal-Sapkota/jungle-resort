@@ -79,20 +79,20 @@ const Navbar = () => {
 
                         {/* CENTER — Desktop Nav */}
                         <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 space-x-10">
-                            <a href="#" className="font-sans font-medium text-gray-800 hover:text-gold transition-colors">
+                            <a href="#" className=" font-normal text-gray-800 hover:text-gold transition-colors">
                                 About
                             </a>
-                            <a href="#" className="font-sans font-medium text-gray-800 hover:text-gold transition-colors flex items-center">
+                            <a href="#" className=" font-normal text-gray-800 hover:text-gold transition-colors flex items-center">
                                 Destinations
                                 <FaChevronDown className="ml-1 text-sm" />
                             </a>
-                            <a href="#" className="font-sans font-medium text-gray-800 hover:text-gold transition-colors">
+                            <a href="#" className=" font-normal text-gray-800 hover:text-gold transition-colors">
                                 Special Offers
                             </a>
-                            <a href="#" className="font-sans font-medium text-gray-800 hover:text-gold transition-colors">
+                            <a href="#" className="font-normal text-gray-800 hover:text-gold transition-colors">
                                 Jungle Book
                             </a>
-                            <a href="#" className="font-sans font-medium text-gray-800 hover:text-gold transition-colors">
+                            <a href="#" className="font-normal text-gray-800 hover:text-gold transition-colors">
                                 Contact
                             </a>
                         </div>
