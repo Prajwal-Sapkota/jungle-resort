@@ -7,7 +7,7 @@ const Hero = () => {
   const bannerImages = [
     {
       id: 1,
-      url: '/images/banner1.jpg',
+      url: '/images/banner1.webp',
       heading: ['EXCLUSIVE LUXURY', 'WILDLIFE EXPERIENCES', 'AT JUNGLE CAMPS INDIA'],
       subHeading: 'Hospitality Wildlife Indulgence'
     },
@@ -31,7 +31,6 @@ const Hero = () => {
     }
   ];
 
-  // Auto slide every 6 seconds
   useEffect(() => {
     const slideInterval = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % bannerImages.length);
@@ -58,7 +57,6 @@ const Hero = () => {
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-      {/* Banner Slideshow */}
       <div className="absolute inset-0 z-0">
         {bannerImages.map((image, index) => (
           <div
@@ -69,49 +67,43 @@ const Hero = () => {
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url('${image.url}')` }}
             ></div>
-            <div className="absolute inset-0 bg-black/20"></div>
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/70"></div>
+            <div className="absolute inset-0 bg-black/30 sm:bg-black/25 md:bg-black/20"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80"></div>
           </div>
         ))}
       </div>
 
-      {/* Navigation Arrows */}
       <button
         onClick={goToPrevSlide}
-        className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-20 text-white/30 p-2 sm:p-3 rounded-full hover:scale-110 transition-all duration-300"
+        className="absolute left-2 sm:left-3 md:left-4 lg:left-6 xl:left-8 top-1/2 transform -translate-y-1/2 z-20 text-white/40 hover:text-white/80 p-1.5 sm:p-2 md:p-3 rounded-full hover:scale-110 transition-all duration-300"
       >
-        <FaChevronLeft className="w-5 sm:w-6 h-5 sm:h-6 lg:w-18 lg:h-18" />
+        <FaChevronLeft className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-14 lg:h-14 transition-transform group-hover:translate-x-2" />
       </button>
 
       <button
         onClick={goToNextSlide}
-        className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-20 text-white/30 p-2 sm:p-3 rounded-full hover:scale-110 transition-all duration-300"
+        className="absolute right-2 sm:right-3 md:right-4 lg:right-6 xl:right-8 top-1/2 transform -translate-y-1/2 z-20 text-white/40 hover:text-white/80 p-1.5 sm:p-2 md:p-3 rounded-full hover:scale-110 transition-all duration-300"
       >
-        <FaChevronRight className="w-5 sm:w-6 h-5 sm:h-6 lg:w-18 lg:h-18" />
+        <FaChevronRight className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-14 lg:h-14 transition-transform group-hover:translate-x-2" />
       </button>
 
-      {/* Slide Indicators/Dots */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2 sm:space-x-3">
-        {bannerImages.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${index === currentSlide ? 'bg-gold scale-125' : 'bg-cream/50 hover:bg-cream'}`}
-          />
-        ))}
-      </div>
+    
+      
 
-      {/* Center Text */}
-      <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-20 z-10 relative text-center">
-        {bannerImages[currentSlide].heading.map((line, i) => (
-          <h1
-            key={i}
-            className=" font-normal text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed"
-          >
-            {line}
-          </h1>
-        ))}
-        <p className="text-base sm:text-lg md:text-xl text-white/80 font-sans italic mt-2 sm:mt-4">
+      <div className="container mx-auto px-3 sm:px-4 md:px-5 lg:px-6 xl:px-8 py-12 sm:py-14 md:py-16 lg:py-18 xl:py-20 z-10 relative text-center max-w-5xl lg:max-w-6xl xl:max-w-7xl">
+        <div className="space-y-1.5 sm:space-y-2 md:space-y-3 lg:space-y-4">
+          {bannerImages[currentSlide].heading.map((line, i) => (
+            <h1
+              key={i}
+              className="font-normal text-white leading-tight"
+            >
+              <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+                {line}
+              </span>
+            </h1>
+          ))}
+        </div>
+        <p className="text-white/80 font-sans italic mt-2 sm:mt-3 md:mt-4 lg:mt-5 text-sm sm:text-base md:text-lg lg:text-xl">
           {bannerImages[currentSlide].subHeading}
         </p>
       </div>

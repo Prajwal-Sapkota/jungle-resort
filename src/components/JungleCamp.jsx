@@ -1,135 +1,161 @@
-import React, { useState, useEffect } from 'react';
-import { FaChevronLeft, FaChevronRight, FaMapMarkerAlt } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from "react";
+import { FaChevronLeft, FaChevronRight, FaMapMarkerAlt } from "react-icons/fa";
 
 const JungleCamp = () => {
-  const jungleCamps = [
+  const slides = [
     {
-      id: 1,
       name: "PARSILI JUNGLE CAMP",
       location: "Pench National Park",
-      description: "Award-winning lodge set amidst pristine wilderness. Experience luxury meets nature.",
-      features: ["Guided Safaris", "Bird Watching", "Nature Walks", "Luxury Tents"],
-      image: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=1000&q=80",
+      description: "Award-winning lodge set amidst pristine wilderness.",
+      image:
+        "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=1000&q=80",
     },
     {
-      id: 2,
       name: "SHEPOUR FORT",
       location: "Madhya Pradesh",
-      description: "Historic fort turned luxury wildlife lodge. Panoramic views of the jungle.",
-      features: ["Historical Tours", "Wildlife Photography", "Cultural Experiences", "Fine Dining"],
-      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1000&q=80",
+      description: "Historic fort turned luxury wildlife lodge.",
+      image:
+        "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1000&q=80",
     },
     {
-      id: 3,
       name: "PENCH NATIONAL PARK LODGE",
       location: "Pench National Park",
-      description: "Located on the border of Madhya Pradesh. Immerse yourself in tiger territory.",
-      features: ["Tiger Tracking", "Night Safaris", "River Views", "Naturalist Guides"],
-      image: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=1000&q=80",
+      description: "Immerse yourself in tiger territory.",
+      image:
+        "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=1000&q=80",
     },
     {
-      id: 4,
       name: "SANJAY DUBRI TIGER RESERVE",
       location: "Sanjay Dubri Tiger Reserve",
-      description: "New conservation-focused lodge opening soon. Be among the first to experience.",
-      features: ["Exclusive Preview Access", "Conservation Programs", "Premium Accommodations"],
-      image: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=1000&q=80",
-    }
+      description: "Be among the first to experience.",
+      image:
+        "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=1000&q=80",
+    },
   ];
 
-  const [startIndex, setStartIndex] = useState(0);
-  const visibleCount = 3;
+  const [currentIndex, setCurrentIndex] = useState(slides.length);
+  const [slidesToShow, setSlidesToShow] = useState(3);
+  const [transition, setTransition] = useState(true);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const handleResize = () => {
+      setSlidesToShow(window.innerWidth < 1024 ? 1 : 3);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const duplicatedSlides = [...slides, ...slides, ...slides];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
       nextSlide();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [startIndex]);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
 
   const nextSlide = () => {
-    setStartIndex(prev => (prev + 1) % jungleCamps.length);
+    setTransition(true);
+    setCurrentIndex((prev) => prev + 1);
   };
 
   const prevSlide = () => {
-    setStartIndex(prev => (prev - 1 + jungleCamps.length) % jungleCamps.length);
+    setTransition(true);
+    setCurrentIndex((prev) => prev - 1);
   };
 
-  const visibleCamps = [];
-  for (let i = 0; i < visibleCount; i++) {
-    visibleCamps.push(jungleCamps[(startIndex + i) % jungleCamps.length]);
-  }
+  useEffect(() => {
+    const total = slides.length;
+    if (currentIndex >= total * 2) {
+      setTimeout(() => {
+        setTransition(false);
+        setCurrentIndex(total);
+      }, 500);
+    }
+    if (currentIndex < total) {
+      setTimeout(() => {
+        setTransition(false);
+        setCurrentIndex(total + (currentIndex % total));
+      }, 500);
+    }
+  }, [currentIndex]);
+
+  const slideWidth =
+    containerRef.current?.offsetWidth / slidesToShow || 300;
 
   return (
     <div
-      className="py-16 px-4 bg-cover bg-center bg-fixed"
+      className="py-24 px-4 bg-cover bg-center bg-no-repeat "
       style={{
         backgroundImage: "url('/images/texture.webp')",
       }}
     >
-      {/* Heading */}
-      <div className="max-w-7xl mx-auto text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-[#613a1a] drop-shadow-lg">
+      <div className="max-w-7xl mx-auto text-center mb-10">
+        <h1 className="text-3xl md:text-4xl font-bold text-[#613a1a]">
           Jungle Camps India
         </h1>
-        <p className="text-[#2b2a29] max-w-3xl mx-auto text-lg mt-2 drop-shadow-md">
-          Explore award-winning wildlife lodges and connect with nature like never before.
+        <p className="mt-3 text-gray-700 max-w-2xl mx-auto">
+          Explore award-winning wildlife lodges and connect with nature.
         </p>
       </div>
 
-      {/* Carousel Section */}
-      <div className="relative max-w-7xl mx-auto flex items-center justify-center">
-
-        {/* PREV BUTTON */}
+      {/* Carousel */}
+      <div className="relative max-w-7xl mx-auto flex items-center">
+        {/* Left */}
         <button
           onClick={prevSlide}
-          className="text-black/40 hover:bg-[#613a1a] p-3 rounded-full mx-3 border border-[#613a1a]"
+          className="z-10 p-3 border border-[#613a1a] rounded-full hover:bg-[#613a1a] hover:text-white transition"
         >
           <FaChevronLeft />
         </button>
 
-        {/* CAROUSEL */}
-        <div className="flex gap-8 justify-center overflow-hidden">
-
-          {visibleCamps.map((camp) => (
-            <div
-              key={camp.id}
-              className="w-72 flex-shrink-0"
-            >
-              {/* IMAGE */}
-              <div className="overflow-hidden shadow-lg ">
-                <img
-                  src={camp.image}
-                  alt={camp.name}
-                  className="w-full h-64 object-cover transition-transform duration-300 hover:scale-105"
-                />
-              </div>
-
-              {/* TEXT */}
-              <div className=" p-4 rounded-lg">
-                <h2 className="text-xl font-bold text-[#2b2a29]">{camp.name}</h2>
-
-                <div className="flex items-center justify-center gap-2 text-gray-700 mt-1">
-                  <FaMapMarkerAlt /> {camp.location}
+        <div ref={containerRef} className="overflow-hidden w-full mx-4 ">
+          <div
+            className={`flex ${transition ? "transition-transform duration-500 ease-in-out" : ""
+              }`}
+            style={{
+              transform: `translateX(-${currentIndex * slideWidth}px)`,
+            }}
+          >
+            {duplicatedSlides.map((camp, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 px-8 "
+                style={{ width: slideWidth }}
+              >
+                <div className=" overflow-hidden">
+                  <img
+                    src={camp.image}
+                    alt={camp.name}
+                    className="w-full h-56 object-cover"
+                  />
+                  <div className="p-4 text-center">
+                    <h2 className="font-bold text-lg text-[#2b2a29]">
+                      {camp.name}
+                    </h2>
+                    <div className="flex items-center justify-center gap-1 text-gray-600 text-sm mt-1">
+                      <FaMapMarkerAlt />
+                      {camp.location}
+                    </div>
+                    <p className="mt-2 text-sm text-gray-700">
+                      {camp.description}
+                    </p>
+                  </div>
                 </div>
-
-                <p className="text-gray-800 mt-2 text-center">{camp.description}</p>
-
-                
               </div>
-            </div>
-          ))}
-
+            ))}
+          </div>
         </div>
 
-        
+        {/* Right */}
         <button
           onClick={nextSlide}
-          className="text-black/40 hover:bg-[#613a1a] p-3 rounded-full mx-3 border border-[#613a1a]"
+          className="z-10 p-3 border border-[#613a1a] rounded-full hover:bg-[#613a1a] hover:text-white transition"
         >
           <FaChevronRight />
         </button>
-
       </div>
     </div>
   );
