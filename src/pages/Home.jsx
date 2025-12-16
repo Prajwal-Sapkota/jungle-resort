@@ -16,6 +16,7 @@ export default function Home() {
         <Story />
         <JungleCamp/>
         <Special/>
+        <Hero/>
         
         
         

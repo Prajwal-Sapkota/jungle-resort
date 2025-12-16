@@ -57,6 +57,7 @@ const Hero = () => {
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
+      {/* Background Slides - Unchanged */}
       <div className="absolute inset-0 z-0">
         {bannerImages.map((image, index) => (
           <div
@@ -73,40 +74,55 @@ const Hero = () => {
         ))}
       </div>
 
+      {/* Navigation Arrows - Layout optimized */}
       <button
         onClick={goToPrevSlide}
-        className="absolute left-2 sm:left-3 md:left-4 lg:left-6 xl:left-8 top-1/2 transform -translate-y-1/2 z-20 text-white/40 hover:text-white/80 p-1.5 sm:p-2 md:p-3 rounded-full hover:scale-110 transition-all duration-300"
+        className="absolute left-4 sm:left-6 md:left-8 lg:left-10 xl:left-12 top-1/2 transform -translate-y-1/2 z-20 text-white/40 hover:text-white/80 p-2 sm:p-3 md:p-4 rounded-full hover:scale-110 transition-all duration-300"
       >
-        <FaChevronLeft className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-14 lg:h-14 transition-transform group-hover:translate-x-2" />
+        <FaChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12" />
       </button>
 
       <button
         onClick={goToNextSlide}
-        className="absolute right-2 sm:right-3 md:right-4 lg:right-6 xl:right-8 top-1/2 transform -translate-y-1/2 z-20 text-white/40 hover:text-white/80 p-1.5 sm:p-2 md:p-3 rounded-full hover:scale-110 transition-all duration-300"
+        className="absolute right-4 sm:right-6 md:right-8 lg:right-10 xl:right-12 top-1/2 transform -translate-y-1/2 z-20 text-white/40 hover:text-white/80 p-2 sm:p-3 md:p-4 rounded-full hover:scale-110 transition-all duration-300"
       >
-        <FaChevronRight className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-14 lg:h-14 transition-transform group-hover:translate-x-2" />
+        <FaChevronRight className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12" />
       </button>
 
-    
+      {/* Content Container - Layout optimized */}
+      <div className="relative z-10 w-full">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
+          <div className="min-h-screen flex flex-col items-center justify-center py-8 sm:py-12 md:py-16 lg:py-20">
+            
+            {/* Heading Container - Better vertical spacing */}
+            <div className="w-full max-w-4xl lg:max-w-5xl xl:max-w-6xl">
+              <div className="space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6 mb-6 sm:mb-8 md:mb-10">
+                {bannerImages[currentSlide].heading.map((line, i) => (
+                  <div
+                    key={i}
+                    className="font-normal text-white leading-tight text-center"
+                  >
+                    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
+                      {line}
+                    </h1>
+                  </div>
+                ))}
+              </div>
+              
+              {/* Subheading - Proper spacing */}
+              <div className="mt-6 sm:mt-8 md:mt-10 lg:mt-12">
+                <p className="text-white/80 font-sans italic text-center text-base sm:text-lg md:text-xl lg:text-2xl">
+                  {bannerImages[currentSlide].subHeading}
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       
 
-      <div className="container mx-auto px-3 sm:px-4 md:px-5 lg:px-6 xl:px-8 py-12 sm:py-14 md:py-16 lg:py-18 xl:py-20 z-10 relative text-center max-w-5xl lg:max-w-6xl xl:max-w-7xl">
-        <div className="space-y-1.5 sm:space-y-2 md:space-y-3 lg:space-y-4">
-          {bannerImages[currentSlide].heading.map((line, i) => (
-            <h1
-              key={i}
-              className="font-normal text-white leading-tight"
-            >
-              <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
-                {line}
-              </span>
-            </h1>
-          ))}
-        </div>
-        <p className="text-white/80 font-sans italic mt-2 sm:mt-3 md:mt-4 lg:mt-5 text-sm sm:text-base md:text-lg lg:text-xl">
-          {bannerImages[currentSlide].subHeading}
-        </p>
-      </div>
     </div>
   );
 };

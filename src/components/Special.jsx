@@ -60,21 +60,23 @@ const Special = () => {
     const container = containerRef.current;
     const horizontal = horizontalRef.current;
 
-    const scrollDistance =
-      horizontal.scrollWidth - container.offsetWidth;
+    const scrollDistance = horizontal.scrollWidth - container.offsetWidth ;
 
     if (scrollDistance <= 0) return;
+
+    // Kill existing triggers
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
         start: "top top",
         end: `+=${scrollDistance}`,
-        scrub: true,
+        scrub: 1,
         pin: true,
-        
         anticipatePin: 1,
         invalidateOnRefresh: true,
+        markers: false,
       },
     });
 
@@ -84,63 +86,62 @@ const Special = () => {
     });
 
     return () => {
-      tl.scrollTrigger?.kill();
-      tl.kill();
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <section
       ref={containerRef}
-      className="relative bg-gradient-to-b from-[#f4fbf7] via-[#e6f4ec] to-[#d9efe3] overflow-hidden">
+      className="relative bg-gradient-to-b from-[#f4fbf7] via-[#e6f4ec] to-[#d9efe3] overflow-hidden"
+    >
       {/* Header */}
-      <div className="pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-20 md:pb-16">
+      <div className="pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-12 md:pb-16">
         <div className="container mx-auto px-4 sm:px-6 md:px-8">
-          <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font- text-center text-[#613a1a] py-4 ">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-[#613a1a] mb-4">
             Special Offers
           </h2>
-          <p className="text-gray-600 text-center text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-center text-base sm:text-lg md:text-xl max-w-2xl mx-auto">
             Discover exclusive deals and packages for your next jungle adventure
           </p>
         </div>
       </div>
 
-      <div className="sticky top-0 h-[70vh] sm:h-[75vh] md:h-[80vh] flex items-start overflow-hidden"> 
+      {/* Horizontal Scroll Container - Now works on mobile too */}
+      <div className="sticky top-0 h-[70vh] sm:h-[75vh] md:h-[80vh] flex items-start overflow-hidden ">
         <div
           ref={horizontalRef}
-          className="flex items-center gap-8 px-8"
+          className="flex items-center px-8"
         >
           {offers.map((offer, index) => (
             <div
               key={index}
-              className={`flex-shrink-0 bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 ${isMobile ? 'w-72 sm:w-80' : 'w-80 sm:w-96 md:w-[28rem]'
-                }`}
+              className={`flex-shrink-0 mx-4 bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 ${
+                isMobile ? 'w-72' : 'w-80 sm:w-96 md:w-[28rem]'
+              }`}
             >
               <div className="relative overflow-hidden">
                 <img
                   src={offer.image}
                   alt={offer.title}
-                  className={`w-full object-cover transition-transform duration-500 hover:scale-110 ${isMobile ? 'h-48 sm:h-56' : 'h-56 sm:h-64'
-                    }`}
+                  className={`w-full object-cover transition-transform duration-500 hover:scale-110 ${
+                    isMobile ? 'h-48' : 'h-56 sm:h-64'
+                  }`}
                 />
                 <div className="absolute top-3 right-3 bg-[#613a1a] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
                   Limited
                 </div>
               </div>
 
-              <div className="p-4 sm:p-5 md:p-6">
-                <h3 className={`font-bold text-gray-800 mb-2 ${isMobile ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'
-                  }`}>
+              <div className="p-4 sm:p-6">
+                <h3 className={`font-bold text-gray-800 mb-2 ${isMobile ? 'text-lg' : 'text-xl sm:text-2xl'}`}>
                   {offer.title}
                 </h3>
-                <p className={`text-gray-600 mb-4 line-clamp-2 ${isMobile ? 'text-sm' : 'text-base'
-                  }`}>
+                <p className={`text-gray-600 mb-4 line-clamp-2 ${isMobile ? 'text-sm' : 'text-base'}`}>
                   {offer.desc}
                 </p>
-                <div className="flex justify-between items-center mt-4">
-                  <span className="text-[#613a1a] font-bold text-lg sm:text-xl">
-                    20% OFF
-                  </span>
+                <div className="flex justify-center items-center mt-4">
+                  
                   <button className="px-4 sm:px-5 py-2 sm:py-2.5 bg-[#613a1a] text-white rounded-lg hover:bg-[#815533] transition-colors duration-300 text-sm sm:text-base">
                     Explore Offer
                   </button>
@@ -152,6 +153,9 @@ const Special = () => {
       </div>
 
       
+
+    
+    
     </section>
   );
 };
